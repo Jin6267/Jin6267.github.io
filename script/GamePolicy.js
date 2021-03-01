@@ -13,6 +13,9 @@ function GamePolicy(){
     this.weithInterv = 210;
     this.gameover = false;
 
+    //for the first time count the help menu showing time
+    this.HelpMenuTime = false;
+    this.target2FirstTime = false;
     this.UsedTimeHit = 0;
     this.time = 0;
 
@@ -39,7 +42,9 @@ GamePolicy.prototype.drawScores = function(){//"#096834"
             this.target = 1;
             //used time
             this.time = (new Date().getTime() - this.UsedTimeHit);
-            Game.UsedTimeHit = new Date().getTime();
+            if(this.HelpMenuTime){
+                this.time =  this.time - 5000;
+            }
             const Record = AV.Object.extend('Record');
             const record = new Record();
             record.set('User_ID', Game.userId.toString());
@@ -52,6 +57,7 @@ GamePolicy.prototype.drawScores = function(){//"#096834"
             console.log('save successfully')});
 
             this.hitWhiteBallTimes = 0;
+            this.target2FirstTime = true;
         }else if(2 == this.hitBorderTimes && 1 == this.target){
             this.target = 2;
             //used time

@@ -106,6 +106,7 @@ Game_Singleton.prototype.startNewGame = function(){
         1, 
         new Vector2(sprites.controls.width/2,sprites.controls.height/2)
     );
+    Game.policy.HelpMenuTime = true;
     Game.policy.UsedTimeHit = new Date().getTime();
      setTimeout(()=>{
          Game.mainLoop();
@@ -119,8 +120,10 @@ Game_Singleton.prototype.restartGame = function(){
     Game.gameWorld.reset();
     Game.policy.reset();
     Canvas2D.clear();
-    //
-    Game.policy.UsedTimeHit = new Date().getTime();
+    if(Game.policy.target2FirstTime){
+        Game.policy.UsedTimeHit = new Date().getTime();
+        Game.policy.target2FirstTime = false;
+    }
 }
 
 Game_Singleton.prototype.continueGame = function(){
